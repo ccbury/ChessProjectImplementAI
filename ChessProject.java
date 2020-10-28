@@ -3,10 +3,7 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
-/*
-	This class can be used as a starting point for creating your Chess game project. The only piece that 
-	has been coded is a white pawn...a lot done, more to do!
-*/
+
 
 public class ChessProject extends JFrame implements MouseListener, MouseMotionListener {
     JLayeredPane layeredPane;
