@@ -63,68 +63,65 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
 
         // Setting up the Initial Chess board.
         for (int i = 8; i < 16; i++) {
-            pieces = new JLabel(new ImageIcon("WhitePawn.png"));
+            pieces = new JLabel(new ImageIcon("resources/WhitePawn.png"));
             panels = (JPanel) chessBoard.getComponent(i);
             panels.add(pieces);
         }
-        pieces = new JLabel(new ImageIcon("WhiteRook.png"));
+        pieces = new JLabel(new ImageIcon("resources/WhiteRook.png"));
         panels = (JPanel) chessBoard.getComponent(0);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteKnight.png"));
+        pieces = new JLabel(new ImageIcon("resources/WhiteKnight.png"));
         panels = (JPanel) chessBoard.getComponent(1);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteKnight.png"));
+        pieces = new JLabel(new ImageIcon("resources/WhiteKnight.png"));
         panels = (JPanel) chessBoard.getComponent(6);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteBishop.png"));
+        pieces = new JLabel(new ImageIcon("resources/WhiteBishop.png"));
         panels = (JPanel) chessBoard.getComponent(2);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteBishop.png"));
+        pieces = new JLabel(new ImageIcon("resources/WhiteBishop.png"));
         panels = (JPanel) chessBoard.getComponent(5);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteKing.png"));
+        pieces = new JLabel(new ImageIcon("resources/WhiteKing.png"));
         panels = (JPanel) chessBoard.getComponent(3);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteQueen.png"));
+        pieces = new JLabel(new ImageIcon("resources/WhiteQueen.png"));
         panels = (JPanel) chessBoard.getComponent(4);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("WhiteRook.png"));
+        pieces = new JLabel(new ImageIcon("resources/WhiteRook.png"));
         panels = (JPanel) chessBoard.getComponent(7);
         panels.add(pieces);
         for (int i = 48; i < 56; i++) {
-            pieces = new JLabel(new ImageIcon("BlackPawn.png"));
+            pieces = new JLabel(new ImageIcon("resources/BlackPawn.png"));
             panels = (JPanel) chessBoard.getComponent(i);
             panels.add(pieces);
         }
-        pieces = new JLabel(new ImageIcon("BlackRook.png"));
+        pieces = new JLabel(new ImageIcon("resources/BlackRook.png"));
         panels = (JPanel) chessBoard.getComponent(56);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackKnight.png"));
+        pieces = new JLabel(new ImageIcon("resources/BlackKnight.png"));
         panels = (JPanel) chessBoard.getComponent(57);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackKnight.png"));
+        pieces = new JLabel(new ImageIcon("resources/BlackKnight.png"));
         panels = (JPanel) chessBoard.getComponent(62);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackBishop.png"));
+        pieces = new JLabel(new ImageIcon("resources/BlackBishop.png"));
         panels = (JPanel) chessBoard.getComponent(58);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackBishop.png"));
+        pieces = new JLabel(new ImageIcon("resources/BlackBishop.png"));
         panels = (JPanel) chessBoard.getComponent(61);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackKing.png"));
+        pieces = new JLabel(new ImageIcon("resources/BlackKing.png"));
         panels = (JPanel) chessBoard.getComponent(59);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackQueen.png"));
+        pieces = new JLabel(new ImageIcon("resources/BlackQueen.png"));
         panels = (JPanel) chessBoard.getComponent(60);
         panels.add(pieces);
-        pieces = new JLabel(new ImageIcon("BlackRook.png"));
+        pieces = new JLabel(new ImageIcon("resources/BlackRook.png"));
         panels = (JPanel) chessBoard.getComponent(63);
         panels.add(pieces);
     }//End ChessProject Method
 
-    /*
-        This method checks if there is a piece present on a particular square.
-    */
     private Boolean piecePresent(int x, int y) {
         Component c = chessBoard.findComponentAt(x, y);
         if (c instanceof JPanel) {
@@ -134,9 +131,6 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         }
     }
 
-    /*
-        This is a method to check if a piece is a Black piece.
-    */
     private Boolean checkWhiteOponent(int newX, int newY) {
         Boolean oponent;
         Component c1 = chessBoard.findComponentAt(newX, newY);
@@ -150,10 +144,6 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         return oponent;
     }//End checkWhiteOpponent
 
-    /*
-        This method is called when we press the Mouse. So we need to find out what piece we have
-        selected. We may also not have selected a piece!
-    */
     public void mousePressed(MouseEvent e) {
         chessPiece = null;
         Component c = chessBoard.findComponentAt(e.getX(), e.getY());
@@ -177,11 +167,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         if (chessPiece == null) return;
         chessPiece.setLocation(me.getX() + xAdjustment, me.getY() + yAdjustment);
     }//End mouseDragged
-     
- 	/*
-		This method is used when the Mouse is released...we need to make sure the move was valid before 
-		putting the piece back on the board.
-	*/
+
 
     public void mouseReleased(MouseEvent e) {
         if (chessPiece == null) return;
@@ -426,7 +412,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 //End else
                 if ((!checkWhiteOponent(e.getX(), e.getY())) && (pieceName.contains("White"))) {
                     validMove = false;
-                } else  if ((checkWhiteOponent(e.getX(), e.getY())) && (pieceName.contains("Black"))){
+                } else if ((checkWhiteOponent(e.getX(), e.getY())) && (pieceName.contains("Black"))) {
                     validMove = false;
                 } else {
                     validMove = true;
@@ -568,6 +554,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         //This is due to the fact that diagonal directions on this grid will always result in 9, -9, 11, -11 when co-ordinates are subtracted from one another
         int calc = Integer.parseInt(Integer.toString(newX) + Integer.toString(newY))
                 - Integer.parseInt(Integer.toString(startX) + Integer.toString(startY));
+
 
         //For loop to detect if another piece is in the bishops path. as Bishop cannot 'jump over' any other piece
         for (int i = 1; i <= il; i++) {
