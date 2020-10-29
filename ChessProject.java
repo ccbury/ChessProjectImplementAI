@@ -1,8 +1,16 @@
+import com.sun.tools.javac.Main;
+
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import javax.print.attribute.standard.Media;
+import javax.sound.sampled.*;
 import javax.swing.*;
-
 
 
 public class ChessProject extends JFrame implements MouseListener, MouseMotionListener {
@@ -172,8 +180,12 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         chessPiece.setVisible(false);
         success = false;
         Component c = chessBoard.findComponentAt(e.getX(), e.getY());
+
         String tmp = chessPiece.getIcon().toString();
-        pieceName = tmp.substring(0, (tmp.length() - 4));
+        String[] pieceTmp = tmp.split( "/");
+        pieceName = pieceTmp[1];
+        pieceName = pieceName.substring(0, (pieceName.length() - 4));
+
         validMove = false;
 
         if (turn) {
@@ -221,22 +233,27 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
             } else {
                 location = (startY * 8) + startX;
             }
-            String pieceLocation = pieceName + ".png";
+            String pieceLocation = "resources/"+pieceName+".png";
             pieces = new JLabel(new ImageIcon(pieceLocation));
             panels = (JPanel) chessBoard.getComponent(location);
             panels.add(pieces);
+            try {
+                noMoveSound();
+            } catch (MalformedURLException malformedURLException) {
+                malformedURLException.printStackTrace();
+            }
         } else {
             if ((success) && (pieceName.contains("White"))) {
                 int location = 56 + (e.getX() / 75);
                 if (c instanceof JLabel) {
                     Container parent = c.getParent();
                     parent.remove(0);
-                    pieces = new JLabel(new ImageIcon("WhiteQueen.png"));
+                    pieces = new JLabel(new ImageIcon("resources/WhiteQueen.png"));
                     parent = (JPanel) chessBoard.getComponent(location);
                     parent.add(pieces);
                 } else {
                     Container parent = (Container) c;
-                    pieces = new JLabel(new ImageIcon("WhiteQueen.png"));
+                    pieces = new JLabel(new ImageIcon("resources/WhiteQueen.png"));
                     parent = (JPanel) chessBoard.getComponent(location);
                     parent.add(pieces);
                 }
@@ -245,12 +262,12 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 if (c instanceof JLabel) {
                     Container parent = c.getParent();
                     parent.remove(0);
-                    pieces = new JLabel(new ImageIcon("BlackQueen.png"));
+                    pieces = new JLabel(new ImageIcon("resources/BlackQueen.png"));
                     parent = (JPanel) chessBoard.getComponent(location);
                     parent.add(pieces);
                 } else {
                     Container parent = (Container) c;
-                    pieces = new JLabel(new ImageIcon("BlackQueen.png"));
+                    pieces = new JLabel(new ImageIcon("resources/BlackQueen.png"));
                     parent = (JPanel) chessBoard.getComponent(location);
                     parent.add(pieces);
                 }
@@ -266,8 +283,15 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 chessPiece.setVisible(true);
             }
         }// End if(validMove) / Else
+
     }//End mouseRelease
 
+    public void noMoveSound() throws MalformedURLException {
+        File file = new File("resources/no.wav");
+        URL url = file.toURI().toURL();
+        AudioClip clip = Applet.newAudioClip(url);
+        clip.play();
+    }
     public void mouseClicked(MouseEvent e) {
     }
 
@@ -283,6 +307,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
     public void whitePawnMove(MouseEvent e) {
         int newY = e.getY() / 75;
         int newX = e.getX() / 75;
+
         if (startY == 1) {
             if (((startX == (e.getX() / 75)) && ((((e.getY() / 75) - startY) == 1) || ((e.getY() / 75) - startY) == 2)) || ((newX == startX + 1) && (newY == startY + 1) && (checkWhiteOponent(e.getX(), e.getY()))) || ((newX == startX - 1) && (newY == startY + 1) && (checkWhiteOponent(e.getX(), e.getY())))) {
                 if ((((e.getY() / 75) - startY) == 2)) {
@@ -479,7 +504,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                     panels = (JPanel) chessBoard.getComponent(0);
                     panels.remove(0);
                     panels.updateUI();
-                    pieces = new JLabel(new ImageIcon("WhiteRook.png"));
+                    pieces = new JLabel(new ImageIcon("resources/WhiteRook.png"));
                     panels = (JPanel) chessBoard.getComponent(2);
                     panels.add(pieces);
                 }//End final if that moves pieces
@@ -494,7 +519,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                     panels = (JPanel) chessBoard.getComponent(7);
                     panels.remove(0);
                     panels.updateUI();
-                    pieces = new JLabel(new ImageIcon("WhiteRook.png"));
+                    pieces = new JLabel(new ImageIcon("resources/WhiteRook.png"));
                     panels = (JPanel) chessBoard.getComponent(4);
                     panels.add(pieces);
                 }//End final if that moves pieces
@@ -513,7 +538,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                     panels = (JPanel) chessBoard.getComponent(56);
                     panels.remove(0);
                     panels.updateUI();
-                    pieces = new JLabel(new ImageIcon("BlackRook.png"));
+                    pieces = new JLabel(new ImageIcon("resources/BlackRook.png"));
                     panels = (JPanel) chessBoard.getComponent(58);
                     panels.add(pieces);
                 }//End final if that moves pieces
@@ -528,7 +553,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                     panels = (JPanel) chessBoard.getComponent(63);
                     panels.remove(0);
                     panels.updateUI();
-                    pieces = new JLabel(new ImageIcon("BlackRook.png"));
+                    pieces = new JLabel(new ImageIcon("resources/BlackRook.png"));
                     panels = (JPanel) chessBoard.getComponent(60);
                     panels.add(pieces);
                 }//End final if that moves pieces
