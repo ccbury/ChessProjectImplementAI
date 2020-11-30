@@ -16,7 +16,7 @@ public class AIAgent{
   public Move randomMove(Stack possibilities){
 
     int moveID = rand.nextInt(possibilities.size());
-    System.out.println("Agent randomly selected move : "+moveID);
+    //System.out.println("Agent randomly selected move : "+moveID);
     for(int i=1;i < (possibilities.size()-(moveID));i++){
       possibilities.pop();
     }
