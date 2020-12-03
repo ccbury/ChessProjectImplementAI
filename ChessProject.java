@@ -1,19 +1,15 @@
-import com.sun.tools.javac.Main;
-
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Random;
 import java.util.Stack;
-import javax.print.attribute.standard.Media;
-import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.Border;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 
 public class ChessProject extends JFrame implements MouseListener, MouseMotionListener {
@@ -29,7 +25,6 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
     JPanel panels;
     JLabel pieces;
     Boolean aiWhiteMoved = false;
-
     //all of these variables are needed in multiple methods while maintaining their values.
     Boolean validMove = false;
     String pieceName;
@@ -129,7 +124,6 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         pieces = new JLabel(new ImageIcon("resources/BlackRook.png"));
         panels = (JPanel) chessBoard.getComponent(63);
         panels.add(pieces);
-
     }//End ChessProject Method
 
     private Boolean piecePresent(int x, int y) {
@@ -246,11 +240,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 }
             }//End switch statement
         }//End If / Else
-        if(boardSide.equals("Black")&& !aiWhiteMoved){
-            makeAIMove();
-            aiWhiteMoved=true;
-            validMove = false;
-        }
+
         //This if statement checks that a valid move was returned. if not it places the piece back where it originated. if so the piece is moved to the new location.
         //This also handles pawns being turned into respective queens when reaching enemy back line
         if (!validMove) {
@@ -332,6 +322,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
     }
 
     public void mouseExited(MouseEvent e) {
+
     }
 
     public void whitePawnMove(MouseEvent e) {
@@ -1448,7 +1439,6 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         }
     }
 
-
     boolean agentwins = false;
 
     static String aiType;
@@ -1464,18 +1454,17 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         Stack aiMoves = new Stack();
         Stack completeMoves = new Stack();
         Stack temporary = new Stack();
-
+        Move tmp;
         if (boardSide.equals("White")) {
             aiMoves = black;
         } else if(boardSide.equals("Black")) {
             aiMoves = white;
         }
-        Move tmp;
-
         while (!aiMoves.empty()) {
             Square s = (Square) aiMoves.pop();
             String tmpString = s.getName();
             Stack tmpMoves = new Stack();
+            int i=0;
             if (tmpString.contains("Knight")) {
                 tmpMoves = getKnightMoves(s.getXC(), s.getYC(), s.getName());
             } else if (tmpString.contains("Bishop")) {
@@ -1493,8 +1482,6 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
             } else if (tmpString.contains("King")) {
                 tmpMoves = getKingSquares(s.getXC(), s.getYC(), s.getName());
             }
-
-            int i=0;
             while (!tmpMoves.empty()) {
                 tmp = (Move) tmpMoves.pop();
                 //System.out.println(i+": ");
@@ -1504,17 +1491,36 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 //System.out.println("Y coord: "+tmp.getLanding().getYC());
                 completeMoves.push(tmp);
             }
-           // System.out.println("");
         }
 
         temporary = (Stack) completeMoves.clone();
-
         getLandingSquares(temporary);
-
-        //printStack(temporary);
-
+        Stack blackKingSearch = findBlackPieces();
+        boolean blackFlag = false;
+        while(!blackKingSearch.isEmpty()){
+            Square blackKing = (Square)blackKingSearch.pop();
+            if(blackKing.getName().contains("King")){
+                    blackFlag = true;
+            }
+        }
+        if(!blackFlag){
+            JOptionPane.showMessageDialog(null, "Congratulations,you have won!");
+            System.exit(0);
+        }
+        Stack whiteKingSearch = findWhitePieces();
+        boolean whiteFlag = false;
+        while(!whiteKingSearch.isEmpty()){
+            Square whiteKing = (Square)whiteKingSearch.pop();
+            if(whiteKing.getName().contains("King")){
+                whiteFlag = true;
+            }
+        }
+        if(!whiteFlag){
+            JOptionPane.showMessageDialog(null, "Congratulations, you have won!");
+            System.exit(0);
+        }
         if (completeMoves.size() == 0) {
-            JOptionPane.showMessageDialog(null, "Cogratulations, you have placed the AI component in a Stale Mate Position");
+            JOptionPane.showMessageDialog(null, "Congratulations, you have placed the AI component in a Stale Mate Position");
             System.exit(0);
         } else {
             //System.out.println("=============================================================");
@@ -1584,7 +1590,6 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         }
 
     }
-
 
     public static void aiSelection() {
         String ai = null;
@@ -1676,6 +1681,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         });
 
     }
+
 
     public static void displayBoard() {
         JFrame frame = new ChessProject();
