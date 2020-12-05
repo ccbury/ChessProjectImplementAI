@@ -13,8 +13,11 @@ import java.awt.event.WindowListener;
 
 
 public class ChessProject extends JFrame implements MouseListener, MouseMotionListener {
-    JLayeredPane layeredPane;
+    static JLayeredPane layeredPane;
     static JPanel chessBoard;
+    static String aiType;
+    static String boardSide;
+    boolean agentwins = false;
     JLabel chessPiece;
     int xAdjustment;
     int yAdjustment;
@@ -27,7 +30,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
     Boolean aiWhiteMoved = false;
     //all of these variables are needed in multiple methods while maintaining their values.
     Boolean validMove = false;
-    String pieceName;
+    static String pieceName;
     Boolean success;
     Boolean turn = true;
     Boolean whiteKingMoved = false;
@@ -126,7 +129,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         panels.add(pieces);
     }//End ChessProject Method
 
-    private Boolean piecePresent(int x, int y) {
+    private static Boolean piecePresent(int x, int y) {
         Component c = chessBoard.findComponentAt(x, y);
         if (c instanceof JPanel) {
             return false;
@@ -135,7 +138,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         }
     }
 
-    public String findPiece(int x, int y){
+    public static String findPiece(int x, int y){
         x=x*75;
         y=y*75;
         if(chessBoard.findComponentAt(x, y) instanceof JLabel){
@@ -147,7 +150,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         }
     }
 
-    private Boolean checkWhiteOponent(int newX, int newY) {
+    private static Boolean checkWhiteOponent(int newX, int newY) {
         Boolean oponent;
         Component c1 = chessBoard.findComponentAt(newX, newY);
         JLabel awaitingPiece = (JLabel) c1;
@@ -160,7 +163,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         return oponent;
     }//End checkWhiteOpponent
 
-    private Boolean checkBlackOponent(int newX, int newY) {
+    private static Boolean checkBlackOponent(int newX, int newY) {
         Boolean oponent;
         Component c1 = chessBoard.findComponentAt(newX, newY);
         JLabel awaitingPiece = (JLabel) c1;
@@ -268,11 +271,21 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                     pieces = new JLabel(new ImageIcon("resources/WhiteQueen.png"));
                     parent = (JPanel) chessBoard.getComponent(location);
                     parent.add(pieces);
+                    try {
+                        queenMakeSound();
+                    } catch (MalformedURLException malformedURLException) {
+                        malformedURLException.printStackTrace();
+                    }
                 } else {
                     Container parent = (Container) c;
                     pieces = new JLabel(new ImageIcon("resources/WhiteQueen.png"));
                     parent = (JPanel) chessBoard.getComponent(location);
                     parent.add(pieces);
+                    try {
+                        queenMakeSound();
+                    } catch (MalformedURLException malformedURLException) {
+                        malformedURLException.printStackTrace();
+                    }
                 }
             } else if ((success) && (pieceName.contains("Black"))) {
                 int location = (e.getX() / 75);
@@ -282,20 +295,40 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                     pieces = new JLabel(new ImageIcon("resources/BlackQueen.png"));
                     parent = (JPanel) chessBoard.getComponent(location);
                     parent.add(pieces);
+                    try {
+                        queenMakeSound();
+                    } catch (MalformedURLException malformedURLException) {
+                        malformedURLException.printStackTrace();
+                    }
                 } else {
                     Container parent = (Container) c;
                     pieces = new JLabel(new ImageIcon("resources/BlackQueen.png"));
                     parent = (JPanel) chessBoard.getComponent(location);
                     parent.add(pieces);
+                    try {
+                        queenMakeSound();
+                    } catch (MalformedURLException malformedURLException) {
+                        malformedURLException.printStackTrace();
+                    }
                 }
             } else {
                 if (c instanceof JLabel) {
                     Container parent = c.getParent();
                     parent.remove(0);
                     parent.add(chessPiece);
+                    try {
+                        validMoveSound();
+                    } catch (MalformedURLException malformedURLException) {
+                        malformedURLException.printStackTrace();
+                    }
                 } else {
                     Container parent = (Container) c;
                     parent.add(chessPiece);
+                    try {
+                        validMoveSound();
+                    } catch (MalformedURLException malformedURLException) {
+                        malformedURLException.printStackTrace();
+                    }
                 }
                 chessPiece.setVisible(true);
             }
@@ -307,6 +340,20 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
 
     public void noMoveSound() throws MalformedURLException {
         File file = new File("resources/no.wav");
+        URL url = file.toURI().toURL();
+        AudioClip clip = Applet.newAudioClip(url);
+        clip.play();
+    }
+
+    public void validMoveSound() throws MalformedURLException {
+        File file = new File("resources/valid.wav");
+        URL url = file.toURI().toURL();
+        AudioClip clip = Applet.newAudioClip(url);
+        clip.play();
+    }
+
+    public void queenMakeSound() throws MalformedURLException {
+        File file = new File("resources/queen.wav");
         URL url = file.toURI().toURL();
         AudioClip clip = Applet.newAudioClip(url);
         clip.play();
@@ -841,7 +888,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         }//End For Loop
     }//End rook move method
 
-    private Stack getWhitePawnSquares(int x, int y, String piece) {
+    public static Stack getWhitePawnSquares(int x, int y, String piece) {
         Stack moves = new Stack();
         Square startingSquare = new Square(x, y, piece);
         Move validM;
@@ -899,7 +946,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         return moves;
     }
 
-    private Stack getBlackPawnSquares(int x, int y, String piece) {
+    public static Stack getBlackPawnSquares(int x, int y, String piece) {
         Stack moves = new Stack();
         Square startingSquare = new Square(x, y, piece);
         int tmpx1 = x + 1;
@@ -958,7 +1005,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         return moves;
     }
 
-    private Stack getKingSquares(int x, int y, String piece) {
+    public static Stack getKingSquares(int x, int y, String piece) {
         Square startingSquare = new Square(x, y, piece);
         Stack moves = new Stack();
         Move validM, validM2, validM3, validM4;
@@ -1090,7 +1137,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         return moves;
     } // end of the method getKingSquares()
 
-    private Stack getQueenMoves(int x, int y, String piece) {
+    public static Stack getQueenMoves(int x, int y, String piece) {
         Stack completeMoves = new Stack();
         Stack tmpMoves = new Stack();
         Move tmp;
@@ -1108,7 +1155,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         return completeMoves;
     }
 
-    private Stack getRookMoves(int x, int y, String piece) {
+    public static Stack getRookMoves(int x, int y, String piece) {
         Square startingSquare = new Square(x, y, piece);
         Stack moves = new Stack();
         Move validM, validM2, validM3, validM4;
@@ -1199,7 +1246,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         return moves;
     }// end of get Rook Moves.
 
-    private Stack getBishopMoves(int x, int y, String piece) {
+    public static Stack getBishopMoves(int x, int y, String piece) {
         Square startingSquare = new Square(x, y, piece);
         Stack moves = new Stack();
         Move validM, validM2, validM3, validM4;
@@ -1290,7 +1337,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         return moves;
     }
 
-    private Stack getKnightMoves(int x, int y, String piece) {
+    public static Stack getKnightMoves(int x, int y, String piece) {
         Square startingSquare = new Square(x, y, piece);
         Stack moves = new Stack();
         Stack attackingMove = new Stack();
@@ -1332,11 +1379,11 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         return attackingMove;
     }
 
-    public String getPieceName(int x, int y) {
+    public static String getPieceName(int x, int y) {
         return pieceName;
     }
 
-    private Boolean checkSurroundingSquares(Square s) {
+    private static Boolean checkSurroundingSquares(Square s) {
         Boolean possible = false;
         int x = s.getXC() * 75;
         int y = s.getYC() * 75;
@@ -1435,14 +1482,9 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
             m = (Move) input.pop();
             s = (Square) m.getStart();
             l = (Square) m.getLanding();
-           // System.out.println("The possible move that was found is : (" + s.getXC() + " , " + s.getYC() + "), landing at (" + l.getXC() + " , " + l.getYC() + ")");
+            System.out.println("The possible move that was found is : (" + s.getXC() + " , " + s.getYC() + "), landing at (" + l.getXC() + " , " + l.getYC() + ")");
         }
     }
-
-    boolean agentwins = false;
-
-    static String aiType;
-    static String boardSide;
 
     public void makeAIMove() {
         AIAgent agent = new AIAgent();
