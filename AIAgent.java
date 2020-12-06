@@ -145,10 +145,7 @@ public class AIAgent extends JFrame {
             System.out.println("A random move was selected as no valuable moves were discovered");
             return selectedMove;
         }
-
-
     }
-
 
     public int getMoveScore(String tmp1, int y) {
 

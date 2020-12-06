@@ -896,55 +896,63 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         int tmpx2 = x - 1;
         int tmpy1 = y + 1;
         int tmpy2 = y + 2;
+        //If white apwn is in starting position
         if (y == 1) {
+            //if to check for piece in square one ahead
             if (!piecePresent((x * 75) + 20, (tmpy1 * 75) + 20)) {
                 Square tmp = new Square(x, tmpy1, findPiece(x,tmpy1));
                 validM = new Move(startingSquare, tmp);
                 moves.push(validM);
-            }
+            }//end if to check for piece in square one ahead
+            //if to check for piece two positions ahead and one position ahead. allows double jump on first move.
             if (!piecePresent((x * 75) + 20, (tmpy1 * 75) + 20) && !piecePresent((x * 75) + 20, (tmpy2 * 75) + 20)) {
                 Square tmp = new Square(x, tmpy2, findPiece(x,tmpy2));
                 validM = new Move(startingSquare, tmp);
                 moves.push(validM);
-            }
+            }//End if to check for piece two positions ahead and one position ahead. allows double jump on first move.
+            //Check for piece to right and one square ahead. allow to take this pawn
             if (piecePresent((tmpx1 * 75) + 20, (tmpy1 * 75) + 20) && tmpx1>=0 && tmpx1<=7 && tmpy1>=0 && tmpy1<=7) {
                 if (checkWhiteOponent((tmpx1 * 75) + 20, (tmpy1 * 75) + 20)) {
                     Square tmp = new Square(tmpx1, tmpy1, findPiece(tmpx1,tmpy1));
                     validM = new Move(startingSquare, tmp);
                     moves.push(validM);
                 }
-            }
+            }//End Check for piece to right and one square ahead. allow to take this pawn
+            //Check for piece to left and one square ahead. allow to take this pawn
             if (piecePresent((tmpx2 * 75) + 20, (tmpy1 * 75) + 20) && tmpx2>=0 && tmpx2<=7 && tmpy1>=0 && tmpy1<=7) {
                 if (checkWhiteOponent((tmpx2 * 75) + 20, (tmpy1 * 75) + 20)) {
                     Square tmp = new Square(tmpx2, tmpy1, findPiece(tmpx2,tmpy1));
                     validM = new Move(startingSquare, tmp);
                     moves.push(validM);
                 }
-            }
+            }//End Check for piece to left and one square ahead. allow to take this pawn
         } else {
+            //if to check for piece in square one ahead
             if (!piecePresent((x * 75) + 20, (tmpy1 * 75) + 20) && tmpy1>=0 && tmpy1<=7) {
                 Square tmp = new Square(x, tmpy1, findPiece(x,tmpy1));
                 validM = new Move(startingSquare, tmp);
                 moves.push(validM);
-            }
+            }//End if to check for piece in square one ahead
+            //Check for piece to right and one square ahead. allow to take this pawn
             if (piecePresent((tmpx1 * 75) + 20, (tmpy1 * 75) + 20) && tmpx1>=0 && tmpx1<=7 && tmpy1>=0 && tmpy1<=7) {
                 if (checkWhiteOponent((tmpx1 * 75) + 20, (tmpy1 * 75) + 20)) {
                     Square tmp = new Square(tmpx1, tmpy1, findPiece(tmpx1, tmpy1));
                     validM = new Move(startingSquare, tmp);
                     moves.push(validM);
                 }
-            }
+            } //End Check for piece to right and one square ahead. allow to take this pawn
+            //Check for piece to left and one square ahead. allow to take this pawn
             if (piecePresent((tmpx2 * 75) + 20, (tmpy1 * 75) + 20) && tmpx2>=0 && tmpx2<=7 && tmpy1>=0 && tmpy1<=7) {
                 if (checkWhiteOponent((tmpx2 * 75) + 20, (tmpy1 * 75) + 20)) {
                     Square tmp = new Square(tmpx2, tmpy1, findPiece(tmpx2, tmpy1));
                     validM = new Move(startingSquare, tmp);
                     moves.push(validM);
                 }
-            }
+            } //End Check for piece to left and one square ahead. allow to take this pawn
         }
 
         return moves;
-    }
+    }//End getWhitePawnSquares
 
     public static Stack getBlackPawnSquares(int x, int y, String piece) {
         Stack moves = new Stack();
@@ -953,57 +961,65 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         int tmpx2 = x - 1;
         int tmpy1 = y - 1;
         int tmpy2 = y - 2;
+        //If white apwn is in starting position
         if (y == 6) {
             Move validM;
+            //if to check for piece in square one ahead
             if (!piecePresent((x * 75) + 20, (tmpy1 * 75) + 20) && tmpy1>=0 && tmpy1<=7) {
                 Square tmp = new Square(x, tmpy1, findPiece(x,tmpy1));
                 validM = new Move(startingSquare, tmp);
                 moves.push(validM);
-            }
+            }//End if to check for piece in square one ahead
+            //if to check for piece two positions ahead and one position ahead. allows double jump on first move.
             if (!piecePresent((x * 75) + 20, (tmpy1 * 75) + 20)&&!piecePresent((x * 75) + 20, (tmpy2 * 75) + 20)) {
                 Square tmp = new Square(x, tmpy2, findPiece(x,tmpy2));
                 validM = new Move(startingSquare, tmp);
                 moves.push(validM);
-            }
+            }//End if to check for piece two positions ahead and one position ahead. allows double jump on first move.
+            //Check for piece to right and one square ahead. allow to take this pawn
             if (piecePresent((tmpx1 * 75) + 20, (tmpy1 * 75) + 20) && tmpx1>=0 && tmpx1<=7 && tmpy1>=0 && tmpy1<=7) {
                 if (checkBlackOponent((tmpx1 * 75) + 20, (tmpy1 * 75) + 20)) {
                     Square tmp = new Square(tmpx1, tmpy1, findPiece(tmpx1,tmpy1));
                     validM = new Move(startingSquare, tmp);
                     moves.push(validM);
                 }
-            }
+            }//End Check for piece to right and one square ahead. allow to take this pawn
+            //Check for piece to left and one square ahead. allow to take this pawn
             if (piecePresent((tmpx2 * 75) + 20, (tmpy1 * 75) + 20) && tmpx2>=0 && tmpx2<=7 && tmpy1>=0 && tmpy1<=7) {
                 if (checkBlackOponent((tmpx2 * 75) + 20, (tmpy1 * 75) + 20)) {
                     Square tmp = new Square(tmpx2, tmpy1, findPiece(tmpx2,tmpy1));
                     validM = new Move(startingSquare, tmp);
                     moves.push(validM);
                 }
-            }
+            }//End Check for piece to left and one square ahead. allow to take this pawn
         } else {
             Move validM;
+            //Check for piece one square ahead.
             if (!piecePresent((x * 75) + 20, (tmpy1 * 75) + 20) && tmpy1>=0 && tmpy1<=7) {
                 Square tmp = new Square(x, tmpy1, findPiece(x,tmpy1));
                 validM = new Move(startingSquare, tmp);
                 moves.push(validM);
-            }
+            }//End Check for piece one square ahead.
+            //Check for piece to right and one square ahead. allow to take this pawn
             if (piecePresent((tmpx1 * 75) + 20, (tmpy1 * 75) + 20) && tmpx1>=0 && tmpx1<=7 && tmpy1>=0 && tmpy1<=7) {
                 if (!checkWhiteOponent((tmpx1 * 75) + 20, (tmpy1 * 75) + 20)) {
                     Square tmp = new Square(tmpx1, tmpy1, findPiece(tmpx1, tmpy1));
                     validM = new Move(startingSquare, tmp);
                     moves.push(validM);
                 }
-            }
+            }//End Check for piece to right and one square ahead. allow to take this pawn
+            //Check for piece to left and one square ahead. allow to take this pawn
             if (piecePresent((tmpx2 * 75) + 20, (tmpy1 * 75) + 20) && tmpx2>=0 && tmpx2<=7 && tmpy1>=0 && tmpy1<=7) {
                 if (!checkWhiteOponent((tmpx2 * 75) + 20, (tmpy1 * 75) + 20)) {
                     Square tmp = new Square(tmpx2, tmpy1, findPiece(tmpx2, tmpy1));
                     validM = new Move(startingSquare, tmp);
                     moves.push(validM);
                 }
-            }
-        }
+            }//End Check for piece to left and one square ahead. allow to take this pawn
+        }//End else to check for positions other than in first position
 
         return moves;
-    }
+    }//End getBlackPawnSquares
 
     public static Stack getKingSquares(int x, int y, String piece) {
         Square startingSquare = new Square(x, y, piece);
@@ -1421,24 +1437,30 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         int x;
         int y;
         String pieceName;
+        //Fist for loop to increment through the X axis
         for (int i = 0; i < 600; i += 75) {
+            //Second for loop to increment through the Y axis
             for (int j = 0; j < 600; j += 75) {
+                //divide j and i by 75 to get co-ords
                 y = i / 75;
                 x = j / 75;
+                //Find component at the co-ords
                 Component tmp = chessBoard.findComponentAt(j, i);
+                //If the component found is an instance of a JLabel. Then a piece is present.
                 if (tmp instanceof JLabel) {
                     chessPiece = (JLabel) tmp;
                     icon = chessPiece.getIcon().toString();
                     pieceName = icon.substring(0, (icon.length() - 4));
+                    //If the name of the piece contains White. then it is a white piece. add to stack
                     if (pieceName.contains("White")) {
                         Square stmp = new Square(x, y, pieceName);
                         squares.push(stmp);
-                    }
-                }
-            }
-        }
+                    }//End if to find white pieces
+                }//End if that checks if component is a JLabel
+            }//End for loop to increment the Y Axis
+        }//End for loop to increment the X axis
         return squares;
-    }
+    }//End findWhitePieces method
 
     private Stack findBlackPieces() {
         Stack squares = new Stack();
@@ -1446,26 +1468,30 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         int x;
         int y;
         String pieceName;
+        //Fist for loop to increment through the X axis
         for (int i = 0; i < 600; i += 75) {
+            //Second for loop to increment through the Y axis
             for (int j = 0; j < 600; j += 75) {
+                //divide j and i by 75 to get co-ords
                 y = i / 75;
                 x = j / 75;
+                //Find component at the co-ords
                 Component tmp = chessBoard.findComponentAt(j, i);
+                //If the component found is an instance of a JLabel. Then a piece is present.
                 if (tmp instanceof JLabel) {
                     chessPiece = (JLabel) tmp;
                     icon = chessPiece.getIcon().toString();
                     pieceName = icon.substring(0, (icon.length() - 4));
+                    //If the name of the piece contains Black. then it is a white piece. add to stack
                     if (pieceName.contains("Black")) {
                         Square stmp = new Square(x, y, pieceName);
                         squares.push(stmp);
-                        //ln("X: "+x+" Y: "+y+" piece: "+pieceName);
-                        //System.out.println();
-                    }
-                }
-            }
-        }
+                    }//End if to check is piece is black
+                }//End if to see if component is JLabel
+            }//End for loop to increment through Y axis
+        }//End for loop to increment through X axis
         return squares;
-    }
+    }//End findBlackPieces method
 
     private void resetBorders() {
         Border empty = BorderFactory.createEmptyBorder();
@@ -1473,7 +1499,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
             JPanel tmppanel = (JPanel) chessBoard.getComponent(i);
             tmppanel.setBorder(empty);
         }
-    }
+    }//End reset borders method
 
     private void printStack(Stack input) {
         Move m;
@@ -1484,9 +1510,10 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
             l = (Square) m.getLanding();
             System.out.println("The possible move that was found is : (" + s.getXC() + " , " + s.getYC() + "), landing at (" + l.getXC() + " , " + l.getYC() + ")");
         }
-    }
+    } //End printStack method
 
     public void makeAIMove() {
+        //Create AI Agent object that will move the ai
         AIAgent agent = new AIAgent();
         resetBorders();
         layeredPane.validate();
@@ -1497,16 +1524,20 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
         Stack completeMoves = new Stack();
         Stack temporary = new Stack();
         Move tmp;
+        //Check which side of the board the user is. Return the opposite for the AIAgent to use
         if (boardSide.equals("White")) {
             aiMoves = black;
         } else if(boardSide.equals("Black")) {
             aiMoves = white;
-        }
+        }//End if/else to check which side the user is on
+        //While the available pieces is not empty. fetched from the last if/else
         while (!aiMoves.empty()) {
+            //Remove the Square from the Stack of Squares. Get the name of the piece as a string.
             Square s = (Square) aiMoves.pop();
             String tmpString = s.getName();
+            //Create a new stack of moves returned from the get methods. This will be pushed to another stack containing all moves available to aiAgent
             Stack tmpMoves = new Stack();
-            int i=0;
+            //If/else the string contains ".." call method to search for possible moves for that piece.
             if (tmpString.contains("Knight")) {
                 tmpMoves = getKnightMoves(s.getXC(), s.getYC(), s.getName());
             } else if (tmpString.contains("Bishop")) {
@@ -1523,7 +1554,8 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 tmpMoves = getQueenMoves(s.getXC(), s.getYC(), s.getName());
             } else if (tmpString.contains("King")) {
                 tmpMoves = getKingSquares(s.getXC(), s.getYC(), s.getName());
-            }
+            }//end if/else to find piece moves.
+            //While the tmpMoves is not empty. Push the tmpMoves to completeMoves
             while (!tmpMoves.empty()) {
                 tmp = (Move) tmpMoves.pop();
                 //System.out.println(i+": ");
@@ -1532,40 +1564,46 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 //System.out.println("X coord: "+tmp.getLanding().getXC());
                 //System.out.println("Y coord: "+tmp.getLanding().getYC());
                 completeMoves.push(tmp);
-            }
-        }
+            }//End While to add moves returned to Stack of all possible moves
+        }//End while to search through stack of Square pieces
 
         temporary = (Stack) completeMoves.clone();
         getLandingSquares(temporary);
+        //Create a new stack of black pieces. Flag used to identify when Black king is not found on board.
         Stack blackKingSearch = findBlackPieces();
         boolean blackFlag = false;
+        //While loop to search stack for king piece
         while(!blackKingSearch.isEmpty()){
             Square blackKing = (Square)blackKingSearch.pop();
             if(blackKing.getName().contains("King")){
                     blackFlag = true;
-            }
-        }
+            }//If black king is found. turn flag true
+        }//End While loop to search stack for king piece
         if(!blackFlag){
             JOptionPane.showMessageDialog(null, "Congratulations,you have won!");
             System.exit(0);
-        }
+        }//If BlackFlag is still false. Game is over. AIAgent has lost
+        //Create a new stack of black pieces. Flag used to identify when White king is not found on board.
         Stack whiteKingSearch = findWhitePieces();
         boolean whiteFlag = false;
+        //While loop to search stack for king piece
         while(!whiteKingSearch.isEmpty()){
             Square whiteKing = (Square)whiteKingSearch.pop();
             if(whiteKing.getName().contains("King")){
                 whiteFlag = true;
-            }
-        }
+            }//If whiteKing is found. turn flag true
+        }//End While loop to search stack for king piece
         if(!whiteFlag){
             JOptionPane.showMessageDialog(null, "Congratulations, you have won!");
             System.exit(0);
-        }
+        }//If WhiteFlag is still false. Game is over. AIAgent has lost
+
+        //If the AIAgent has not moves available. Stalemate is reached. Player wins.
         if (completeMoves.size() == 0) {
             JOptionPane.showMessageDialog(null, "Congratulations, you have placed the AI component in a Stale Mate Position");
             System.exit(0);
         } else {
-            //System.out.println("=============================================================");
+            //Create stack to take moves from completeMoves. This is so that you can print the moves
             Stack testing = new Stack();
             while (!completeMoves.empty()) {
                 Move tmpMove = (Move) completeMoves.pop();
@@ -1573,54 +1611,66 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 Square s2 = (Square) tmpMove.getLanding();
                 //System.out.println("The " + s1.getName() + " can move from (" + s1.getXC() + ", " + s1.getYC() + ") to the following square: (" + s2.getXC() + ", " + s2.getYC() + ")");
                 testing.push(tmpMove);
-            }
-            // System.out.println("=============================================================");
+            }//End while loop to print the moves available.
+
+            //Create red border to display over the move the AI component selects
             Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
+            //Move created to take slected move from the AI component in question.
             Move selectedMove = new Move();
+            //Switch to call the AI type that the user selected.
             switch (aiType) {
                 case "random" -> selectedMove = agent.randomMove(testing);
                 case "nextBest" -> selectedMove =agent.nextBestMove(testing);
                 case "twoLevelsDeep" -> selectedMove =agent.twoLevelsDeep(testing);
-            }
+            }//End switch to call AI type user selected
+            //Get starting and landing square from selected move
             Square startingPoint = (Square) selectedMove.getStart();
             Square landingPoint = (Square) selectedMove.getLanding();
+            //get co-ords from the squares selected.
             int startX1 = (startingPoint.getXC() * 75) + 20;
             int startY1 = (startingPoint.getYC() * 75) + 20;
             int landingX1 = (landingPoint.getXC() * 75) + 20;
             int landingY1 = (landingPoint.getYC() * 75) + 20;
-            //System.out.println("-------- Move " + startingPoint.getName() + " (" + startingPoint.getXC() + ", " + startingPoint.getYC() + ") to (" + landingPoint.getXC() + ", " + landingPoint.getYC() + ")");
-
+            //Find the component that the AI wants to move.
             Component c = (JLabel) chessBoard.findComponentAt(startX1, startY1);
             Container parent = c.getParent();
+            //remove the piece the Ai wants to move
             parent.remove(c);
+            //Set the red border to the starting position of the AI
             int panelID = (startingPoint.getYC() * 8) + startingPoint.getXC();
             panels = (JPanel) chessBoard.getComponent(panelID);
             panels.setBorder(redBorder);
             parent.validate();
-
+            //find the component at the landing position of the AI Move.
             Component l = chessBoard.findComponentAt(landingX1, landingY1);
+            //If component is a JLabel.. OR is component is a piece since JLabels are used to show pieces.
             if (l instanceof JLabel) {
                 Container parentlanding = l.getParent();
                 JLabel awaitingName = (JLabel) l;
                 String agentCaptured = awaitingName.getIcon().toString();
+                //if piece captured is a king set falg to allow ai agent to win to true
                 if (agentCaptured.contains("King")) {
                     agentwins = true;
-                }
+                }//End if to allow the AI to win
+                //remove the piece the AI is capturing
                 parentlanding.remove(l);
                 parentlanding.validate();
+                //Add the piece the AI is using to the landing position.
                 pieces = new JLabel(new ImageIcon(startingPoint.getName() + ".png"));
                 int landingPanelID = (landingPoint.getYC() * 8) + landingPoint.getXC();
                 panels = (JPanel) chessBoard.getComponent(landingPanelID);
                 panels.add(pieces);
+                //Add red border to the square to show where the piece moved to
                 panels.setBorder(redBorder);
                 layeredPane.validate();
                 layeredPane.repaint();
-
+                //if the agentwins is true. The AI Wins. end the game
                 if (agentwins) {
                     JOptionPane.showMessageDialog(null, "The AI Agent has won!");
                     System.exit(0);
-                }
+                }//End if agentwins is true AI wins
             } else {
+                //Add piece to the board that the Ai is moving.
                 pieces = new JLabel(new ImageIcon(startingPoint.getName() + ".png"));
                 int landingPanelID = (landingPoint.getYC() * 8) + landingPoint.getXC();
                 panels = (JPanel) chessBoard.getComponent(landingPanelID);
@@ -1628,37 +1678,33 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 panels.setBorder(redBorder);
                 layeredPane.validate();
                 layeredPane.repaint();
-            }
-        }
-
-    }
+            }//End if/else to see if component is a JLabel
+        }//End if/else to make sure the aiAgent has moves available
+    }//End makeAIMove method
 
     public static void aiSelection() {
-        String ai = null;
-
+        //Method to allow the user to select which AI they would like to play against
+        //Create JFrame window with 3 buttons. one for each of the AI types available
         JFrame aiOptions = new JFrame("Choose your AI Opponent");
         aiOptions.setLayout(new FlowLayout());
         Dimension aiSelectSize = new Dimension(600, 80);
         aiOptions.setSize(aiSelectSize);
         aiOptions.setResizable(false);
         aiOptions.setLocationRelativeTo(null);
-
-
+        //Create the 3 buttons for each of the options
         JButton randomMove = new JButton("Random Move");
         randomMove.setBounds(50, 1, 60, 30);
-
         JButton nextBestMove = new JButton("Next Best Move");
         nextBestMove.setBounds(50, 300, 60, 30);
-
         JButton twoLevelsDeep = new JButton("Two Levels Deep");
         twoLevelsDeep.setBounds(50, 600, 60, 30);
-
+        //Add the 3 buttons to the JFrame
         aiOptions.add(randomMove);
         aiOptions.add(nextBestMove);
         aiOptions.add(twoLevelsDeep);
-
+        //Set the JFrame to be visible
         aiOptions.setVisible(true);
-
+        //Add action listener. closes AIOptions. set the ai Type to Random and call the ChooseSide method
         randomMove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -1667,6 +1713,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 chooseSide();
             }
         });
+        //Add action listener. closes AIOptions. set the ai Type to NextBest and call the ChooseSide method
         nextBestMove.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -1675,6 +1722,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 chooseSide();
             }
         });
+        //Add action listener. closes AIOptions. set the ai Type to TwoLevelsDeep and call the ChooseSide method
         twoLevelsDeep.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -1683,28 +1731,29 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 chooseSide();
             }
         });
-    }
+    }//End the chooseAI method
 
     public static void chooseSide() {
+        //Create new JFrame that allows the user to select if they want to play as White or Black
+        //Just create simple buttonsin the Frame that allow user to click Black or White.
         JFrame aiOptions = new JFrame("Choose your side of your board");
         aiOptions.setLayout(new FlowLayout());
         Dimension aiSelectSize = new Dimension(600, 80);
         aiOptions.setSize(aiSelectSize);
         aiOptions.setResizable(false);
         aiOptions.setLocationRelativeTo(null);
-
+        //Create White button
         JButton white = new JButton("White");
         white.setBounds(50, 1, 60, 30);
-
+        //Create Black button
         JButton black = new JButton("Black");
         black.setBounds(50, 300, 60, 30);
-
-
+        //Add buttons to the Frame
         aiOptions.add(white);
         aiOptions.add(black);
-
+        //Set the window to visible
         aiOptions.setVisible(true);
-
+        //Create listener from the White button that sets the boardside to White and calls the displayBoard method. also closes the chooseSide window
         white.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -1713,6 +1762,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 displayBoard();
             }
         });
+        //Create listener from the Black button that sets the boardside to Black and calls the displayBoard method. also closes the chooseSide window
         black.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -1722,19 +1772,20 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
             }
         });
 
-    }
-
+    }//end ChooseSide method
 
     public static void displayBoard() {
+        //Create display board JFrame. instance of Chessproject. Displays the board to the user.
         JFrame frame = new ChessProject();
         frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-    }
+    }//End display board class
 
     public static void main(String[] args) {
+        //Call the aiSelection method. This allows the user to select the type of Ai they would like to play against.
         aiSelection();
     }//End Main
 
