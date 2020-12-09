@@ -1662,6 +1662,7 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
             //find the component at the landing position of the AI Move.
             Component l = chessBoard.findComponentAt(landingX1, landingY1);
             //If component is a JLabel.. OR is component is a piece since JLabels are used to show pieces.
+
             if (l instanceof JLabel) {
                 Container parentlanding = l.getParent();
                 JLabel awaitingName = (JLabel) l;
@@ -1687,6 +1688,25 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                     JOptionPane.showMessageDialog(null, "The AI Agent has won!");
                     System.exit(0);
                 }//End if agentwins is true AI wins
+                Component z = chessBoard.findComponentAt(landingX1, landingY1);
+                Container zlanding = z.getParent();
+                JLabel comp = (JLabel)z;
+                String aiPiece = comp.getIcon().toString();
+                Boolean success = false;
+                if(aiPiece.contains("Pawn") && (landingY1/75==7 || landingY1/75==0)){
+                    success = true;
+                }
+                if(success){
+                    System.out.println("Get here");
+                    zlanding.remove(z);
+                    if(boardSide.equals("White")) {
+                        pieces = new JLabel(new ImageIcon("resources/BlackQueen.png"));
+                    }else{
+                        pieces = new JLabel(new ImageIcon("resources/WhiteQueen.png"));
+                    }
+                    panels = (JPanel) chessBoard.getComponent(landingPanelID);
+                    panels.add(pieces);
+                }
             } else {
                 //Add piece to the board that the Ai is moving.
                 pieces = new JLabel(new ImageIcon(startingPoint.getName() + ".png"));
@@ -1696,6 +1716,25 @@ public class ChessProject extends JFrame implements MouseListener, MouseMotionLi
                 panels.setBorder(redBorder);
                 layeredPane.validate();
                 layeredPane.repaint();
+                Component z = chessBoard.findComponentAt(landingX1, landingY1);
+                Container zlanding = z.getParent();
+                JLabel comp = (JLabel)z;
+                String aiPiece = comp.getIcon().toString();
+                Boolean success = false;
+                if(aiPiece.contains("Pawn") && (landingY1/75==7 || landingY1/75==0)){
+                    success = true;
+                }
+                if(success){
+                    System.out.println("Get here");
+                    zlanding.remove(z);
+                    if(boardSide.equals("White")) {
+                        pieces = new JLabel(new ImageIcon("resources/BlackQueen.png"));
+                    }else{
+                        pieces = new JLabel(new ImageIcon("resources/WhiteQueen.png"));
+                    }
+                    panels = (JPanel) chessBoard.getComponent(landingPanelID);
+                    panels.add(pieces);
+                }
             }//End if/else to see if component is a JLabel
         }//End if/else to make sure the aiAgent has moves available
     }//End makeAIMove method
